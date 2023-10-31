@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Ux2vPi0qBRKL0M6+hEEDiMbwGdXe+DFaANpLAlC1gyIBgyvTwNecs59ApFCT7yiefLEKpbVfX8lx76Rs0XeKZg==",
+  "dgSpecHash": "RZhNXprrDzPMvxaNWYKsS2y+XRWowVRNuHGWsz+Lba2vi8YFVeZoczqX6OoR+1l9Jj0JC+SWbTWEMvlXWF6sEw==",
   "success": true,
   "projectFilePath": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jens_\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\jens_\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\jens_\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\jens_\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\jens_\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\jens_\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\jens_\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",

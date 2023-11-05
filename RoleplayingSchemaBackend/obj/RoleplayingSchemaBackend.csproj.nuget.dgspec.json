@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj": {}
+    "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt - backend\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj": {
+    "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt - backend\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj",
+        "projectUniqueName": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt - backend\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj",
         "projectName": "RoleplayingSchemaBackend",
-        "projectPath": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj",
+        "projectPath": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt - backend\\RoleplayingSchemaBackend\\RoleplayingSchemaBackend.csproj",
         "packagesPath": "C:\\Users\\jens_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt\\RoleplayingSchemaBackend\\obj\\",
+        "outputPath": "C:\\Users\\jens_\\OneDrive\\Skrivebord\\BachelorProjekt - backend\\RoleplayingSchemaBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,9 +45,21 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "Mediatr": {
               "target": "Package",
               "version": "[12.1.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend;
+using RoleplayingSchemaBackend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddMediatR(mdt => mdt.RegisterServicesFromAssemblies(typeof(Pro
 builder.Services.AddSingleton<UserData>();
 
 //Done
+
+//Database
+builder.Services.AddDbContext<RoleplayingDbContext>(opts => 
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
 
 var app = builder.Build();
 

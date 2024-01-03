@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend;
+using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
+using RoleplayingSchemaBackend.Handlers;
+using RoleplayingSchemaBackend.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +17,19 @@ builder.Services.AddSwaggerGen();
 //Mediatr, CQRS testing
 builder.Services.AddMediatR(mdt => mdt.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 //This should be changed to Scoped life time rather than singleton WHEN the database will be connected
-builder.Services.AddSingleton<UserData>();
+//builder.Services.AddSingleton<UserData>();
 
 //Done
+builder.Services.AddScoped<GetUsersQuery>();
+builder.Services.AddScoped<GetUsersHandler>();
+
+//builder.Services.AddScoped<AddUserCommand>();
+//builder.Services.AddScoped<AddUserHandler>();
 
 //Database
-builder.Services.AddDbContext<RoleplayingDbContext>(opts => 
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
+builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    //opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
 
 var app = builder.Build();
 

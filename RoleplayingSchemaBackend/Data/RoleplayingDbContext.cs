@@ -10,6 +10,6 @@ namespace RoleplayingSchemaBackend.Data
 
         }
 
-        public DbSet<Users> User { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }

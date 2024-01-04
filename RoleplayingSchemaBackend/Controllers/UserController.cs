@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RoleplayingSchemaBackend.Commands;
+using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
 
 namespace RoleplayingSchemaBackend.Controllers
@@ -25,7 +26,7 @@ namespace RoleplayingSchemaBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddUser([FromBody]User user)
+        public async Task<ActionResult> AddUser([FromBody]Users user)
         {
             await _mediator.Send(new AddUserCommand(user));
 

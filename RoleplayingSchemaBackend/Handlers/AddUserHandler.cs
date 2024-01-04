@@ -1,20 +1,21 @@
 ﻿using MediatR;
 using RoleplayingSchemaBackend.Commands;
+using RoleplayingSchemaBackend.Data;
 
 namespace RoleplayingSchemaBackend.Handlers
 {
     public class AddUserHandler : IRequestHandler<AddUserCommand>
     {
-        private readonly UserData _userData;
+        private readonly RoleplayingDbContext _context;
 
-        public AddUserHandler(UserData userData)
+        public AddUserHandler(RoleplayingDbContext context)
         {
-            _userData = userData;
+            _context = context;
         }
-
         public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            await _userData.AddUser(request.User);
+            _context.Users.Add(request.User);
+            await _context.SaveChangesAsync();
         }
     }
 }

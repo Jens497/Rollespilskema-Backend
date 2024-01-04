@@ -24,12 +24,12 @@ namespace RoleplayingSchemaBackend.Controllers
             return Ok(users);
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<ActionResult> AddUser([FromBody]User user)
         {
             await _mediator.Send(new AddUserCommand(user));
 
             return StatusCode(201);
-        }*/
+        }
     }
 }

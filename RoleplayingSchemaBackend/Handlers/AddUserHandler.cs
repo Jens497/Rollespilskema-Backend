@@ -3,7 +3,7 @@ using RoleplayingSchemaBackend.Commands;
 
 namespace RoleplayingSchemaBackend.Handlers
 {
-    /*public class AddUserHandler : IRequestHandler<AddUserCommand>
+    public class AddUserHandler : IRequestHandler<AddUserCommand>
     {
         private readonly UserData _userData;
 
@@ -16,5 +16,5 @@ namespace RoleplayingSchemaBackend.Handlers
         {
             await _userData.AddUser(request.User);
         }
-    }*/
+    }
 }

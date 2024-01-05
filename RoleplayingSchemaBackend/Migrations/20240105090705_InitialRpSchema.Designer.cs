@@ -12,7 +12,7 @@ using RoleplayingSchemaBackend.Data;
 namespace RoleplayingSchemaBackend.Migrations
 {
     [DbContext(typeof(RoleplayingDbContext))]
-    [Migration("20240103103716_InitialRpSchema")]
+    [Migration("20240105090705_InitialRpSchema")]
     partial class InitialRpSchema
     {
         /// <inheritdoc />
@@ -32,7 +32,6 @@ namespace RoleplayingSchemaBackend.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")

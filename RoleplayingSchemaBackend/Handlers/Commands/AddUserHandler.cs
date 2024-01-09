@@ -2,7 +2,7 @@
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
 
-namespace RoleplayingSchemaBackend.Handlers
+namespace RoleplayingSchemaBackend.Handlers.Commands
 {
     public class AddUserHandler : IRequestHandler<AddUserCommand>
     {

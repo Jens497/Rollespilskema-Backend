@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
 
-namespace RoleplayingSchemaBackend.Handlers
+namespace RoleplayingSchemaBackend.Handlers.Queries
 {
     //public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<Users>>
     public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<Users>>

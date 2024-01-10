@@ -17,6 +17,6 @@ namespace RoleplayingSchemaBackend.Handlers.Queries
 
         //This should return the list of users from the database rather than from the dummy setup
         public async Task<IEnumerable<Users>> Handle(GetUsersQuery request, CancellationToken cancellation)
-            => await _context.Users.OrderBy(x => x.Username).ToListAsync();
+            => await _context.Users.OrderBy(x => x.UserName).ToListAsync();
     }
 }

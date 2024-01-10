@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RoleplayingSchemaBackend;
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Handlers;
+using RoleplayingSchemaBackend.Handlers.Commands;
+using RoleplayingSchemaBackend.Handlers.Queries;
 using RoleplayingSchemaBackend.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +32,24 @@ builder.Services.AddMediatR(mdt => mdt.RegisterServicesFromAssemblies(typeof(Pro
 //Database
 builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
     opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    //opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
+//opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
+
+//Identity
+//builder.Services.AddIdentityCore<Users>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<RoleplayingDbContext>();
+builder.Services.AddIdentity<Users, IdentityRole>(options =>
+    {
+        options.User.RequireUniqueEmail = false;
+    })
+    .AddEntityFrameworkStores<RoleplayingDbContext>();
+
+//Authentication
+/*builder.Services.AddAuthentication(opts =>
+{
+    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+});*/
 
 var app = builder.Build();
 
@@ -40,6 +62,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

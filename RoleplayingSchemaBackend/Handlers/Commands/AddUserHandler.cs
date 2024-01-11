@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace RoleplayingSchemaBackend.Handlers.Commands
 {
-    public class AddUserHandler : IRequestHandler<AddUserCommand>
+    public class AddUserHandler : IRequestHandler<AddUserCommand, String>
     {
         //private readonly RoleplayingDbContext _context;
         private readonly UserManager<Users> _userManager;
@@ -20,7 +20,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             _userManager = userManager;
             //_roleManager = roleManager;
         }
-        public async Task Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<String> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             Console.WriteLine("We here");
             var usernameExists = await _userManager.FindByNameAsync(request.User.UserName);
@@ -28,6 +28,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             {
                 Console.Write("Wrong");
                 //return "Denied";
+                return "Errorcode: 400, The user already exists!";
             }
 
             Users user = new()
@@ -39,7 +40,9 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             };
 
             var res = await _userManager.CreateAsync(user, request.User.Password);
-            //return res.Succeeded ? "Success - 201Created" : "Failed to create - 500";
+            var res1 = res.ToString();
+            Console.WriteLine(res1);
+            return res.Succeeded ? "Success - 201Created" : res1;
             
             //Old code
             //_context.Users.Add(request.User);

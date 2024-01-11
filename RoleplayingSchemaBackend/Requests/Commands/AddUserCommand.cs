@@ -3,5 +3,5 @@ using RoleplayingSchemaBackend.Data;
 
 namespace RoleplayingSchemaBackend.Commands
 {
-    public record AddUserCommand(UserDTO User) : IRequest;
+    public record AddUserCommand(UserDTO User) : IRequest<String>;
 }

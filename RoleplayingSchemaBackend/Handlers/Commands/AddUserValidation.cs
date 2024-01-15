@@ -7,9 +7,9 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
     {
         public AddUserValidation()
         {
-            RuleFor(x => x.User.FirstName).NotEmpty().WithMessage("Please fill in the First name.");
-            RuleFor(x => x.User.UserName).NotEmpty().WithMessage("Please fill in the username.");
-            RuleFor(x => x.User.Password).NotEmpty(); //Dont need a message, this is handled by the Identity
+            RuleFor(x => x.User.FirstName).NotNull().NotEmpty().WithMessage("Please fill in the First name.");
+            RuleFor(x => x.User.UserName).NotNull().NotEmpty().WithMessage("Please fill in the username.");
+            RuleFor(x => x.User.Password).NotNull().NotEmpty().WithMessage("Password is required.");
         }
     }
 }

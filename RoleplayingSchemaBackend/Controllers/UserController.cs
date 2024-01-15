@@ -28,9 +28,9 @@ namespace RoleplayingSchemaBackend.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUser([FromBody]UserDTO user)
         {
-            await _mediator.Send(new AddUserCommand(user));
+            var result = await _mediator.Send(new AddUserCommand(user));
 
-            return StatusCode(201);
+            return Ok(result);
         }
     }
 }

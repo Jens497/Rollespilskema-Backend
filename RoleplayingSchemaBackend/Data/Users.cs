@@ -5,7 +5,6 @@ namespace RoleplayingSchemaBackend.Data
 {
     public class Users : IdentityUser
     {
-        [Required]
         public string Firstname { get; set; }
     }
 }

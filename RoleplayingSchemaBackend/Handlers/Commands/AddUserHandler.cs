@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
+using RoleplayingSchemaBackend.Handlers.Interface;
 using System.Reflection.Metadata.Ecma335;
 
 namespace RoleplayingSchemaBackend.Handlers.Commands
 {
-    public class AddUserHandler : IRequestHandler<AddUserCommand, String>
+    public class AddUserHandler : ICommandHandler<AddUserCommand, String>
     {
         //private readonly RoleplayingDbContext _context;
         private readonly UserManager<Users> _userManager;
@@ -42,7 +43,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             var res = await _userManager.CreateAsync(user, request.User.Password);
             var res1 = res.ToString();
             Console.WriteLine(res1);
-            return res.Succeeded ? "Success - 201Created" : res1;
+            return res1;
             
             //Old code
             //_context.Users.Add(request.User);

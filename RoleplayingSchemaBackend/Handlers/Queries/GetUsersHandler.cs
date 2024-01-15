@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
+using RoleplayingSchemaBackend.Requests.Interface;
 
 namespace RoleplayingSchemaBackend.Handlers.Queries
 {
     //public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<Users>>
-    public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<Users>>
+    public class GetUsersHandler : IQueryHandler<GetUsersQuery, IEnumerable<Users>>
     {
         private readonly RoleplayingDbContext _context;
 

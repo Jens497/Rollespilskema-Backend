@@ -24,15 +24,8 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
         }
         public async Task<String> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("We here");
-            var usernameExists = await _userManager.FindByNameAsync(request.User.UserName);
-            if (usernameExists != null) 
-            {
-                Console.Write("Wrong");
-                //return "Denied";
-                return "Errorcode: 400, The user already exists!";
-            }
-
+            //No reason to check if user already exists, this is done when creating the user.
+            //Furhtermore the IdentityModelExcepiton takes care of ALL IdentityModel exceptions.
             Users user = new()
             {
                 Email = request.User.Email != "" ? request.User.Email : "",
@@ -50,7 +43,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
                     (Code, Description) => new
                     {
                         Key = Code,
-                        Values = Description.Distinct().ToArray() //This might need to be array (atleast not for password erros) but its here in case of other erros needing it.
+                        Values = Description.First() //This might need to be array (atleast not for password erros) but its here in case of other erros needing it.
                     }).ToDictionary(d => d.Key, v => v.Values);
                 throw new IdentityModelExceptions(errrosDict);
             }

@@ -21,7 +21,6 @@ namespace RoleplayingSchemaBackend.Middleware
             }
 
             var context = new ValidationContext<TRequest>(request);
-
             //The following selection from EF can by done in more ways, this was just the most generic way to collect all the validations errors that are found.
             var errorsDict = _validators.Select(v => v.Validate(context))
                 .SelectMany(v => v.Errors)
@@ -30,10 +29,14 @@ namespace RoleplayingSchemaBackend.Middleware
                 (propertyName, errorMessage) => new
                 {
                     Key = propertyName,
-                    Values = errorMessage.Distinct().ToArray()
-                }).ToDictionary(d => d.Key, v => v.Values);
+                    Value = errorMessage.First()
+                }).ToDictionary(d => d.Key, v => v.Value);
 
             //Check if erros and throw if there are any
+            //Dictionary<string, (string, string[])> newDict;
+            //newDict.Add("ValidationError", errorsDict);
+
+            //newDict.Add("ValidationErrors", errorsDict);
             if (errorsDict.Any())
             {
                 throw new ValidationException(errorsDict);

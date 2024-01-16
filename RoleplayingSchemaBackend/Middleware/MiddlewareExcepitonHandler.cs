@@ -54,6 +54,7 @@ namespace RoleplayingSchemaBackend.Middleware
                 BadHttpRequestException => StatusCodes.Status400BadRequest,
                 EntryPointNotFoundException => StatusCodes.Status404NotFound,
                 ValidationException => StatusCodes.Status422UnprocessableEntity,
+                IdentityModelExceptions => StatusCodes.Status406NotAcceptable, // Should maybe be a 400?
                 _ => StatusCodes.Status500InternalServerError
             };
 
@@ -64,18 +65,18 @@ namespace RoleplayingSchemaBackend.Middleware
                 _ => "Server Error"
             };
 
-        private static IReadOnlyDictionary<string, string[]> GetErrors(Exception ex)
+        private static IDictionary<string, IReadOnlyDictionary<string, string>> GetErrors(Exception ex)
         {
-            IReadOnlyDictionary<string, string[]> errors = null;
+            IDictionary<string, IReadOnlyDictionary<string, string>> errors = new Dictionary<string, IReadOnlyDictionary<string, string>>(); 
 
             if (ex is ValidationExceptionPipeline validationException)
             {
-                errors = validationException.ErrorsDict;
+                errors.Add("ValidationError", validationException.ErrorsDict);
             }
 
             else if (ex is IdentityModelExceptions identityModelExceptions)
             {
-                errors = identityModelExceptions.ErrorsDict;
+                errors.Add("IdentityError", identityModelExceptions.ErrorsDict);
             }
 
             return errors;

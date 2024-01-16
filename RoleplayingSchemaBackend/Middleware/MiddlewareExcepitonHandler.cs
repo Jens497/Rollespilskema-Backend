@@ -73,6 +73,11 @@ namespace RoleplayingSchemaBackend.Middleware
                 errors = validationException.ErrorsDict;
             }
 
+            else if (ex is IdentityModelExceptions identityModelExceptions)
+            {
+                errors = identityModelExceptions.ErrorsDict;
+            }
+
             return errors;
         }
     }

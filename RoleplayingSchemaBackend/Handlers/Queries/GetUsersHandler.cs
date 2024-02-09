@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
 using RoleplayingSchemaBackend.Requests.Interface;

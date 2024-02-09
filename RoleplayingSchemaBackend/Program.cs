@@ -1,22 +1,10 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-using FluentValidation.AspNetCore;
-
-using RoleplayingSchemaBackend;
-using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
-using RoleplayingSchemaBackend.Exceptions;
-using RoleplayingSchemaBackend.Handlers;
-using RoleplayingSchemaBackend.Handlers.Commands;
-using RoleplayingSchemaBackend.Handlers.Queries;
 using RoleplayingSchemaBackend.Middleware;
-using RoleplayingSchemaBackend.Queries;
-using static System.Net.Mime.MediaTypeNames;
-using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +31,9 @@ builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
 //opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
 
 //Validator
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationPipeline<,>));
 builder.Services.AddTransient<MiddlewareExcepitonHandler>();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddFluentValidationAutoValidation();//.AddFluentValidationClientsideAdapters();
@@ -61,7 +51,7 @@ builder.Services.AddFluentValidationAutoValidation();//.AddFluentValidationClien
 
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = true;
+        options.SignIn.RequireConfirmedAccount = false;
         options.User.RequireUniqueEmail = false;
     })
     .AddEntityFrameworkStores<RoleplayingDbContext>()

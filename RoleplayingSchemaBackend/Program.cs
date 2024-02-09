@@ -51,11 +51,33 @@ builder.Services.AddFluentValidationAutoValidation();//.AddFluentValidationClien
 //Identity
 //builder.Services.AddIdentityCore<Users>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<RoleplayingDbContext>();
+
+/*builder.Services.AddAuthentication(o =>
+{
+    o.DefaultScheme = IdentityConstants.ApplicationScheme;
+    o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+.AddIdentityCookies(o => { });*/
+
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
     {
+        options.SignIn.RequireConfirmedAccount = true;
         options.User.RequireUniqueEmail = false;
     })
-    .AddEntityFrameworkStores<RoleplayingDbContext>();
+    .AddEntityFrameworkStores<RoleplayingDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(opts =>
+{
+    opts.Password.RequireNonAlphanumeric = false;
+});
+
+builder.Services.ConfigureApplicationCookie(opts =>
+{
+    opts.Cookie.HttpOnly = true;
+    //This should be something like 60, but is set to one for testing purposes.
+    opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+});
 
 //Authentication
 /*builder.Services.AddAuthentication(opts =>

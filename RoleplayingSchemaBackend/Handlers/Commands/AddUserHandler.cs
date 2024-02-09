@@ -50,6 +50,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
                     throw new IdentityModelExceptions(errrosDict);
                 }
 
+                await _userManager.AddToRoleAsync(user, request.User.Role);
                 Console.WriteLine();
                 Console.WriteLine(res1);
                 return res1;

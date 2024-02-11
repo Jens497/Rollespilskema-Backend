@@ -1,11 +1,11 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Middleware;
+using RoleplayingSchemaBackend.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,19 +80,19 @@ builder.Services.ConfigureApplicationCookie(opts =>
     //This should be something like 60, but is set to one for testing purposes.
     opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
 });
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-           .AddCookie(config =>
-           {
-               config.Cookie.Name = "login";
-               config.LoginPath = "/Account/Login";
-               config.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-           }
-);
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//})
+//           .AddCookie(config =>
+//           {
+//               config.Cookie.Name = "login";
+//               config.LoginPath = "/Account/Login";
+//               config.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+//           }
+//);
 //Authentication
 /*builder.Services.AddAuthentication(opts =>
 {
@@ -112,9 +112,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<MiddlewareExcepitonHandler>();
 
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
+app.UseCors(builder =>
+{
+    var corsSettings = app.Configuration.GetSection("Cors").Get<CorsSettings>();
+
+    builder.WithOrigins(corsSettings.AllowedOrigins);
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
+    builder.AllowCredentials();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

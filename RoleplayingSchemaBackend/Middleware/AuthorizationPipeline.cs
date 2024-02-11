@@ -30,6 +30,7 @@ namespace RoleplayingSchemaBackend.Middleware
 
             if (!isSignedIn)
             {
+                //TBD maybe make it to our own exception so that it goes through the middleware created for exceptions
                 throw new ApplicationException("Unauthorized: has to be signed in");
             }
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;

@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
@@ -27,7 +28,18 @@ builder.Services.AddMediatR(mdt => mdt.RegisterServicesFromAssemblies(typeof(Pro
 
 //Database
 builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptionsAction: sqlOpts =>
+        {
+            sqlOpts.EnableRetryOnFailure(
+                maxRetryCount: 10,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorNumbersToAdd: null);
+        }));/*, builder =>
+    {
+        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    }));*/
+
 //opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
 
 //Validator
@@ -68,7 +80,19 @@ builder.Services.ConfigureApplicationCookie(opts =>
     //This should be something like 60, but is set to one for testing purposes.
     opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
 });
-
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+           .AddCookie(config =>
+           {
+               config.Cookie.Name = "login";
+               config.LoginPath = "/Account/Login";
+               config.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+           }
+);
 //Authentication
 /*builder.Services.AddAuthentication(opts =>
 {

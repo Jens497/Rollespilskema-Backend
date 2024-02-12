@@ -8,14 +8,12 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
 {
     public class LoginHandler : ICommandHandler<LoginCommand, UserResponseDTO>
     {
-        private IHttpContextAccessor _contextAccessor;
         private SignInManager<Users> _signInManager;
         private readonly UserManager<Users> _userManager;
         public LoginHandler(SignInManager<Users> signInManager, UserManager<Users> userManager, IHttpContextAccessor contextAccessor)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _contextAccessor = contextAccessor;
         }
 
         public async Task<UserResponseDTO> Handle(LoginCommand command, CancellationToken token)
@@ -37,7 +35,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
 
             return true;*/
 
-            SignInResult result = await _signInManager.PasswordSignInAsync(command.username, command.password, false, false);
+            SignInResult result = await _signInManager.PasswordSignInAsync(command.username, command.password, true, false);
             if (!result.Succeeded)
             {
                 var errors = new Dictionary<string, string> { };

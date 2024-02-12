@@ -78,7 +78,7 @@ builder.Services.ConfigureApplicationCookie(opts =>
 {
     opts.Cookie.HttpOnly = true;
     //This should be something like 60, but is set to one for testing purposes.
-    opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    opts.ExpireTimeSpan = TimeSpan.FromMinutes(100);
 });
 //builder.Services.AddAuthentication(options =>
 //{

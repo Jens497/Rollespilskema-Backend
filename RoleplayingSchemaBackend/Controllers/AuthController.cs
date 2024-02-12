@@ -24,7 +24,7 @@ namespace RoleplayingSchemaBackend.Controllers
         {
             var result = await _mediator.Send(login);
 
-            return result ? Ok() : BadRequest();
+            return Ok(result);
         }
 
         [HttpPost]

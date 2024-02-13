@@ -11,7 +11,6 @@ namespace RoleplayingSchemaBackend.Data
         {
 
         }
-        //public DbSet<Users> Users { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<Sheet> Sheets { get; set; }
         public DbSet<Component> Components { get; set; }

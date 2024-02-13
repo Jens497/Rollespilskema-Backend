@@ -36,5 +36,12 @@ namespace RoleplayingSchemaBackend.Controllers
             var res = await _mediator.Send(new AddSheetCommand(sheet));
             return Ok(res);
         }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> UpdateSheet([FromBody]Sheet sheet)
+        {
+            var res = await _mediator.Send(new UpdateSheetCommand(sheet));
+            return Ok(res);
+        }
     }
 }

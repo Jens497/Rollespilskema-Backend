@@ -41,8 +41,5 @@ namespace RoleplayingSchemaBackend.Controllers
 
             return Ok(result);
         }
-
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateUserPassword([FromBody] )
     }
 }

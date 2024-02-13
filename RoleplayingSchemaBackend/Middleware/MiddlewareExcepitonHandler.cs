@@ -67,6 +67,7 @@ namespace RoleplayingSchemaBackend.Middleware
 
         private static IDictionary<string, IReadOnlyDictionary<string, string>> GetErrors(Exception ex)
         {
+            //Create a dictionary and fetch the validation errors that there are, if any.
             IDictionary<string, IReadOnlyDictionary<string, string>> errors = new Dictionary<string, IReadOnlyDictionary<string, string>>(); 
 
             if (ex is ValidationExceptionPipeline validationException)

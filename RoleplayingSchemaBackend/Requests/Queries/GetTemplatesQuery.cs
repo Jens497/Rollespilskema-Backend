@@ -4,6 +4,6 @@ using RoleplayingSchemaBackend.Requests.Interface;
 
 namespace RoleplayingSchemaBackend.Requests.Queries
 {
-    [Authorized]
+    [Authorized(Roles = "Admin")]
     public record GetTemplatesQuery(List<string> Ids) : IQuery<List<Template>>;
 }

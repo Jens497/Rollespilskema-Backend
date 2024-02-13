@@ -16,11 +16,6 @@ namespace RoleplayingSchemaBackend.Controllers
             _mediator = mediator;
         }
 
-        /*[HttpGet("{id:int}")]
-        public async Task<ActionResult> GetTemplate(int id)
-        {
-
-        }*/
         [HttpGet]
         public async Task<ActionResult> GetTemplatesIdName()
         {
@@ -40,6 +35,13 @@ namespace RoleplayingSchemaBackend.Controllers
         public async Task<ActionResult> AddTemplate([FromBody]Template template)
         {
             var res = await _mediator.Send(new AddTemplateCommand(template));
+            return Ok(res);
+        }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> UpdateTemplate([FromBody]Template template)
+        {
+            var res = await _mediator.Send(new UpdateTemplateCommand(template));
             return Ok(res);
         }
     }

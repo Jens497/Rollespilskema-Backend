@@ -5,6 +5,6 @@ using RoleplayingSchemaBackend.Middleware;
 
 namespace RoleplayingSchemaBackend.Commands
 {
-    [AllowAnonymous]
+    [Authorized(Roles = "Admin")]
     public record AddUserCommand(UserDTO User) : ICommand<String>;
 }

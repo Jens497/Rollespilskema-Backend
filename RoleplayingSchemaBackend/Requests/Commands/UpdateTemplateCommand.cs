@@ -1,10 +1,9 @@
 ﻿using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Handlers.Interface;
 using RoleplayingSchemaBackend.Middleware;
-using System.Windows.Input;
 
 namespace RoleplayingSchemaBackend.Requests.Commands
 {
-    [Authorized(Roles ="Admin")]
-    public record AddTemplateCommand(Template template) : ICommand<String>;
+    [Authorized(Roles = "Admin")]
+    public record UpdateTemplateCommand(Template template) : ICommand<string>;
 }

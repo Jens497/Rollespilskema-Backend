@@ -25,15 +25,14 @@ namespace RoleplayingSchemaBackend.Middleware
                 return await next();
             }
 
-            var user = _contextAccessor.HttpContext.User;
-            var isSignedIn = _signInManager.IsSignedIn(user);
+            var user = _contextAccessor.HttpContext.User; // Current user that is logged in
+            var isSignedIn = _signInManager.IsSignedIn(user); // Check if user is signed in
 
             if (!isSignedIn)
             {
-                //TBD maybe make it to our own exception so that it goes through the middleware created for exceptions
                 throw new ApplicationException("Unauthorized: has to be signed in");
             }
-
+            //Check if roles are there and if the role that the current user has is sufficient to use the endpoint that is being used.
             var authorizedAttributes = authAttributes.Where(a => a is AuthorizedAttribute && ((AuthorizedAttribute)a).Roles is not null).Select(a => a as AuthorizedAttribute);
             var errorsDict = authorizedAttributes
                 .Select(attribute =>

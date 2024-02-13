@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace RoleplayingSchemaBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class IntitialMigrationIdentity : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,6 +51,18 @@ namespace RoleplayingSchemaBackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Template",
+                columns: table => new
+                {
+                    TemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Template", x => x.TemplateId);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +171,59 @@ namespace RoleplayingSchemaBackend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Sheet",
+                columns: table => new
+                {
+                    SheetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sheet", x => x.SheetId);
+                    table.ForeignKey(
+                        name: "FK_Sheet_Template_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Template",
+                        principalColumn: "TemplateId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Component",
+                columns: table => new
+                {
+                    ComponentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Properties = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SheetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Component", x => x.ComponentId);
+                    table.ForeignKey(
+                        name: "FK_Component_Sheet_SheetId",
+                        column: x => x.SheetId,
+                        principalTable: "Sheet",
+                        principalColumn: "SheetId");
+                    table.ForeignKey(
+                        name: "FK_Component_Template_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Template",
+                        principalColumn: "TemplateId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "134a69bf-0812-461f-9bf6-cc1a61331df1", "2", "User", "User" },
+                    { "f50d47b7-a3a7-44a1-85ad-e54987bf4587", "1", "Admin", "Admin" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,6 +262,21 @@ namespace RoleplayingSchemaBackend.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Component_SheetId",
+                table: "Component",
+                column: "SheetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Component_TemplateId",
+                table: "Component",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sheet_TemplateId",
+                table: "Sheet",
+                column: "TemplateId");
         }
 
         /// <inheritdoc />
@@ -216,10 +298,19 @@ namespace RoleplayingSchemaBackend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Component");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Sheet");
+
+            migrationBuilder.DropTable(
+                name: "Template");
         }
     }
 }

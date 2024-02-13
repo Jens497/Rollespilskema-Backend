@@ -12,8 +12,8 @@ using RoleplayingSchemaBackend.Data;
 namespace RoleplayingSchemaBackend.Migrations
 {
     [DbContext(typeof(RoleplayingDbContext))]
-    [Migration("20240110115707_IntitialMigrationIdentity")]
-    partial class IntitialMigrationIdentity
+    [Migration("20240212095022_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,22 @@ namespace RoleplayingSchemaBackend.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f50d47b7-a3a7-44a1-85ad-e54987bf4587",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "134a69bf-0812-461f-9bf6-cc1a61331df1",
+                            ConcurrencyStamp = "2",
+                            Name = "User",
+                            NormalizedName = "User"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -156,6 +172,70 @@ namespace RoleplayingSchemaBackend.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Component", b =>
+                {
+                    b.Property<Guid>("ComponentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Properties")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SheetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ComponentId");
+
+                    b.HasIndex("SheetId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("Component", (string)null);
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Sheet", b =>
+                {
+                    b.Property<Guid>("SheetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SheetId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("Sheet", (string)null);
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Template", b =>
+                {
+                    b.Property<Guid>("TemplateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TemplateId");
+
+                    b.ToTable("Template", (string)null);
                 });
 
             modelBuilder.Entity("RoleplayingSchemaBackend.Data.Users", b =>
@@ -276,6 +356,38 @@ namespace RoleplayingSchemaBackend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Component", b =>
+                {
+                    b.HasOne("RoleplayingSchemaBackend.Data.Sheet", null)
+                        .WithMany("Components")
+                        .HasForeignKey("SheetId");
+
+                    b.HasOne("RoleplayingSchemaBackend.Data.Template", null)
+                        .WithMany("Components")
+                        .HasForeignKey("TemplateId");
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Sheet", b =>
+                {
+                    b.HasOne("RoleplayingSchemaBackend.Data.Template", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Sheet", b =>
+                {
+                    b.Navigation("Components");
+                });
+
+            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Template", b =>
+                {
+                    b.Navigation("Components");
                 });
 #pragma warning restore 612, 618
         }

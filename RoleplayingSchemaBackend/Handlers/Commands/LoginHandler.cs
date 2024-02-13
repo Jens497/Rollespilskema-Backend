@@ -20,23 +20,6 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
 
         public async Task<UserResponseDTO> Handle(LoginCommand command, CancellationToken token)
         {
-            /*var dsa = await _userManager.FindByIdAsync("ebd52763-5773-4159-9648-feb96c82f874");
-            var userRes = await _userManager.FindByNameAsync("teak");
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, command.username));
-            identity.AddClaim(new Claim(ClaimTypes.Name, command.username));
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, userRes.Firstname));
-            foreach (var role in _userManager.GetRolesAsync(userRes).Result)
-            {
-                identity.AddClaim(new Claim(ClaimTypes.Role, role));
-            }
-            
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-            await _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
-
-            return true;*/
-
             SignInResult result = await _signInManager.PasswordSignInAsync(command.username, command.password, false, false);
             if (!result.Succeeded)
             {

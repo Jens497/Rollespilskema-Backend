@@ -5,5 +5,5 @@ using RoleplayingSchemaBackend.Requests.Interface;
 namespace RoleplayingSchemaBackend.Requests.Queries
 {
     [Authorized]
-    public record GetTemplateQuery(int id) : IQuery<Template>;
+    public record GetTemplatesIdNameQuery() : IQuery<List<TemplateDTO>>;
 }

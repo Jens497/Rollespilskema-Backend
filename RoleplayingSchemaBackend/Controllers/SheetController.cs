@@ -16,10 +16,17 @@ namespace RoleplayingSchemaBackend.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetSheets()
+        [HttpGet("sheets")]
+        public async Task<ActionResult> GetSheets([FromQuery]List<string> Ids)
         {
-            var res = await _mediator.Send(new GetSheetsQuery());
+            var res = await _mediator.Send(new GetSheetsQuery(Ids));
+            return Ok(res);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetSheetsIdName()
+        {
+            var res = await _mediator.Send(new GetSheetsIdNameQuery());
             return Ok(res);
         }
 

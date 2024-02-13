@@ -15,6 +15,6 @@ namespace RoleplayingSchemaBackend.Handlers.Queries
         }
 
         public async Task<IEnumerable<Sheet>> Handle(GetSheetsQuery request, CancellationToken cancellationToken)
-            => await _context.Sheets.OrderBy(x => x.Name).ToListAsync();
+            => await _context.Sheets.Where(x => request.Ids.Contains(x.SheetId.ToString())).Include(x => x.Components).ToListAsync();
     }
 }

@@ -21,11 +21,18 @@ namespace RoleplayingSchemaBackend.Controllers
         {
 
         }*/
-
         [HttpGet]
-        public async Task<ActionResult> GetTemplates()
+        public async Task<ActionResult> GetTemplatesIdName()
         {
-            var res = await _mediator.Send(new GetTemplatesQuery());
+            var res = await _mediator.Send(new GetTemplatesIdNameQuery());
+            return Ok(res);
+        }
+
+
+        [HttpGet("templates")]
+        public async Task<ActionResult> GetTemplates([FromQuery]List<string> Ids)
+        {
+            var res = await _mediator.Send(new GetTemplatesQuery(Ids));
             return Ok(res);
         }
 

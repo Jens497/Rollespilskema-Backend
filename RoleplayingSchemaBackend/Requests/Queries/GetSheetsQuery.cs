@@ -3,5 +3,5 @@ using RoleplayingSchemaBackend.Requests.Interface;
 
 namespace RoleplayingSchemaBackend.Requests.Queries
 {
-    public record GetSheetsQuery() : IQuery<IEnumerable<Sheet>>;
+    public record GetSheetsQuery(List<string> Ids) : IQuery<IEnumerable<Sheet>>;
 }

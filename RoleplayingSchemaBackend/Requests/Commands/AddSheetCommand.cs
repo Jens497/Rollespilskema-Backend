@@ -5,6 +5,6 @@ using RoleplayingSchemaBackend.Middleware;
 
 namespace RoleplayingSchemaBackend.Requests.Commands
 {
-    [Authorized]
-    public record AddSheetCommand(Sheet Sheet) : ICommand<string>;
+    [Authorized(Roles = "Admin")]
+    public record AddSheetCommand(AddSheetDTO sheetDto) : ICommand<string>;
 }

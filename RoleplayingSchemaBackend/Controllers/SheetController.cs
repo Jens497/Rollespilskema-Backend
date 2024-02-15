@@ -31,9 +31,9 @@ namespace RoleplayingSchemaBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddSheet([FromBody]Sheet sheet)
+        public async Task<ActionResult> AddSheet([FromBody]AddSheetDTO sheetDto)
         {
-            var res = await _mediator.Send(new AddSheetCommand(sheet));
+            var res = await _mediator.Send(new AddSheetCommand(sheetDto));
             return Ok(res);
         }
 

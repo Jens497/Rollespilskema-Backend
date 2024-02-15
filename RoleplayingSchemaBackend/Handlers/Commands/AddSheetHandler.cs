@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Handlers.Interface;
 using RoleplayingSchemaBackend.Requests.Commands;
@@ -16,7 +17,15 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
 
         public async Task<string> Handle(AddSheetCommand request, CancellationToken cancellationToken)
         {
-            _context.Sheets.Add(request.Sheet);
+            Sheet sheet = new Sheet(){
+                Components = request.sheetDto.Components,
+                Name = request.sheetDto.Name,
+                SheetId = request.sheetDto.SheetId,
+                TemplateId = request.sheetDto.TemplateId,
+                UserId = request.sheetDto.UserId
+            };
+            _context.Sheets.Add(sheet);
+            //_context.Users.FirstAsync(x => x.Id == request.sheetDto.UserId);
             var res = await _context.SaveChangesAsync();
             return res.ToString();
         }

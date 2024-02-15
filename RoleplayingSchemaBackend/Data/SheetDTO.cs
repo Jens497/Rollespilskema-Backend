@@ -5,5 +5,6 @@
         public string SheetId { get; set; }
         public string Name { get; set; }
         public string TemplateId { get; set; }
+        public SheetUserDTO Owner { get; set; }
     }
 }

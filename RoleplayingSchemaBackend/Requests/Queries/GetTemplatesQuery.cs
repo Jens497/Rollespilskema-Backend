@@ -2,8 +2,8 @@
 using RoleplayingSchemaBackend.Middleware;
 using RoleplayingSchemaBackend.Requests.Interface;
 
-namespace RoleplayingSchemaBackend.Queries
+namespace RoleplayingSchemaBackend.Requests.Queries
 {
     [Authorized(Roles = "Admin")]
-    public record GetUsersQuery() : IQuery<IEnumerable<Users>>;
+    public record GetTemplatesQuery(List<string> Ids) : IQuery<List<Template>>;
 }

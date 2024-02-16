@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
+using RoleplayingSchemaBackend.Requests.Queries;
 
 namespace RoleplayingSchemaBackend.Controllers
 {
@@ -17,6 +19,13 @@ namespace RoleplayingSchemaBackend.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet("me")]
+        public async Task<ActionResult> GetCurrentUserInfo()
+        {
+            var currentUser = await _mediator.Send(new GetUserInfoQuery());
+            return Ok(currentUser);
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetUsers()
         {
@@ -26,11 +35,11 @@ namespace RoleplayingSchemaBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddUser([FromBody]Users user)
+        public async Task<ActionResult> AddUser([FromBody]UserDTO user)
         {
-            await _mediator.Send(new AddUserCommand(user));
+            var result = await _mediator.Send(new AddUserCommand(user));
 
-            return StatusCode(201);
+            return Ok(result);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RoleplayingSchemaBackend.Data;
 
@@ -11,9 +12,11 @@ using RoleplayingSchemaBackend.Data;
 namespace RoleplayingSchemaBackend.Migrations
 {
     [DbContext(typeof(RoleplayingDbContext))]
-    partial class RoleplayingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215104554_GetSheetByUser")]
+    partial class GetSheetByUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,14 +54,14 @@ namespace RoleplayingSchemaBackend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "046acfe7-4bd1-41aa-b8b6-da79496b41d2",
+                            Id = "2f33ff2c-407f-4c20-98e9-a401062ee729",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "0886367b-df02-481b-b30e-d87e26494028",
+                            Id = "9894076b-aae7-414b-95a8-91be0faa8c58",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "User"
@@ -215,7 +218,6 @@ namespace RoleplayingSchemaBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("SheetId");
@@ -375,9 +377,7 @@ namespace RoleplayingSchemaBackend.Migrations
                 {
                     b.HasOne("RoleplayingSchemaBackend.Data.Users", "User")
                         .WithMany("Sheets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

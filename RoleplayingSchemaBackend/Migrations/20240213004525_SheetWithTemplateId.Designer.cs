@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RoleplayingSchemaBackend.Data;
 
@@ -11,9 +12,11 @@ using RoleplayingSchemaBackend.Data;
 namespace RoleplayingSchemaBackend.Migrations
 {
     [DbContext(typeof(RoleplayingDbContext))]
-    partial class RoleplayingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240213004525_SheetWithTemplateId")]
+    partial class SheetWithTemplateId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,14 +54,14 @@ namespace RoleplayingSchemaBackend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "046acfe7-4bd1-41aa-b8b6-da79496b41d2",
+                            Id = "35be8206-2846-4512-8ca5-b2def6835ee4",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "0886367b-df02-481b-b30e-d87e26494028",
+                            Id = "233a02ee-aa97-4688-a9a2-df62ae6a2e7a",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "User"
@@ -214,13 +217,7 @@ namespace RoleplayingSchemaBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("SheetId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Sheet", (string)null);
                 });
@@ -373,28 +370,12 @@ namespace RoleplayingSchemaBackend.Migrations
 
             modelBuilder.Entity("RoleplayingSchemaBackend.Data.Sheet", b =>
                 {
-                    b.HasOne("RoleplayingSchemaBackend.Data.Users", "User")
-                        .WithMany("Sheets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Sheet", b =>
-                {
                     b.Navigation("Components");
                 });
 
             modelBuilder.Entity("RoleplayingSchemaBackend.Data.Template", b =>
                 {
                     b.Navigation("Components");
-                });
-
-            modelBuilder.Entity("RoleplayingSchemaBackend.Data.Users", b =>
-                {
-                    b.Navigation("Sheets");
                 });
 #pragma warning restore 612, 618
         }

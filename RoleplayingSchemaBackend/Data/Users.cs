@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace RoleplayingSchemaBackend.Data
 {
-    public class Users
+    public class Users : IdentityUser
     {
-        public Guid Id { get; set; }
-        [Required]
-        public string Username { get; set; }
-        [Required]
-        public string Password { get; set; }
-        public string? Email { get; set; }
+        public string Firstname { get; set; }
+        public ICollection<Sheet> Sheets { get; set; }
     }
 }

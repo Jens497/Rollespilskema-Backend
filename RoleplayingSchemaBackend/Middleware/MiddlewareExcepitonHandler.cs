@@ -52,6 +52,7 @@ namespace RoleplayingSchemaBackend.Middleware
             ex switch
             {
                 BadHttpRequestException => StatusCodes.Status400BadRequest,
+                UnautorizedException => StatusCodes.Status401Unauthorized,
                 EntryPointNotFoundException => StatusCodes.Status404NotFound,
                 ValidationException => StatusCodes.Status422UnprocessableEntity,
                 IdentityModelExceptions => StatusCodes.Status406NotAcceptable, // Should maybe be a 400?
@@ -78,6 +79,11 @@ namespace RoleplayingSchemaBackend.Middleware
             else if (ex is IdentityModelExceptions identityModelExceptions)
             {
                 errors.Add("IdentityError", identityModelExceptions.ErrorsDict);
+            }
+
+            else if (ex is UnautorizedException unautorizedException)
+            {
+                errors.Add("UnautorizedError", unautorizedException.ErrorsDict);
             }
 
             return errors;

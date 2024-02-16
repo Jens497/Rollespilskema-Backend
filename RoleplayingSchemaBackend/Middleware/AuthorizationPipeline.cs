@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RoleplayingSchemaBackend.Data;
+using RoleplayingSchemaBackend.Exceptions;
 using System.Reflection;
 
 namespace RoleplayingSchemaBackend.Middleware
@@ -30,7 +31,11 @@ namespace RoleplayingSchemaBackend.Middleware
 
             if (!isSignedIn)
             {
-                throw new ApplicationException("Unauthorized: has to be signed in");
+                var errsDict = new Dictionary<string, string>
+                {
+                    {"Unauthorized", "has to be signed in"}
+                };
+                throw new UnautorizedException(errsDict);
             }
             //Check if roles are there and if the role that the current user has is sufficient to use the endpoint that is being used.
             var authorizedAttributes = authAttributes.Where(a => a is AuthorizedAttribute && ((AuthorizedAttribute)a).Roles is not null).Select(a => a as AuthorizedAttribute);
@@ -42,7 +47,11 @@ namespace RoleplayingSchemaBackend.Middleware
 
             if (errorsDict.Any())
             {
-                throw new ApplicationException("Unauthorized: lacking roles");
+                var errsDict = new Dictionary<string, string>
+                {
+                    {"Unauthorized", "lacking roles"}
+                };
+                throw new UnautorizedException(errsDict);
             }
 
             return await next(); //After the errors has been thrown return and await for the next command coming.

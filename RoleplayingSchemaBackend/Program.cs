@@ -8,6 +8,7 @@ using RoleplayingSchemaBackend.Middleware;
 using RoleplayingSchemaBackend.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.local.json", true);
 
 // Add services to the container.
 

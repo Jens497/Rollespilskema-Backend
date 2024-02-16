@@ -33,10 +33,6 @@ namespace RoleplayingSchemaBackend.Middleware
                 }).ToDictionary(d => d.Key, v => v.Value);
 
             //Check if erros and throw if there are any
-            //Dictionary<string, (string, string[])> newDict;
-            //newDict.Add("ValidationError", errorsDict);
-
-            //newDict.Add("ValidationErrors", errorsDict);
             if (errorsDict.Any())
             {
                 throw new ValidationException(errorsDict);

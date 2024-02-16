@@ -4,21 +4,16 @@ using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Exceptions;
 using RoleplayingSchemaBackend.Handlers.Interface;
-using System.Reflection.Metadata.Ecma335;
 
 namespace RoleplayingSchemaBackend.Handlers.Commands
 {
     public class AddUserHandler : ICommandHandler<AddUserCommand, String>
     {
-        //private readonly RoleplayingDbContext _context;
         private readonly UserManager<Users> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        //public AddUserHandler(RoleplayingDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
-        //public AddUserHandler(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         public AddUserHandler(UserManager<Users> userManager, RoleManager<IdentityRole> roleManager)
         {
-            //_context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -45,7 +40,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
                         (Code, Description) => new
                         {
                             Key = Code,
-                            Values = Description.First() //This might need to be array (atleast not for password erros) but its here in case of other erros needing it.
+                            Values = Description.First()
                         }).ToDictionary(d => d.Key, v => v.Values);
                     throw new IdentityModelExceptions(errrosDict);
                 }
@@ -57,7 +52,6 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             }
             else
             {
-                //TBD extend the dictionary so that it sends back the options for what roles actually exists
                 var errsDict = new Dictionary<string, string>
                 {
                     {"RoleNotFound", "The role does not exist"}

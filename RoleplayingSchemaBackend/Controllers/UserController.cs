@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RoleplayingSchemaBackend.Commands;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Queries;
+using RoleplayingSchemaBackend.Requests.Queries;
 
 namespace RoleplayingSchemaBackend.Controllers
 {
@@ -16,6 +17,13 @@ namespace RoleplayingSchemaBackend.Controllers
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("me")]
+        public async Task<ActionResult> GetCurrentUserInfo()
+        {
+            var currentUser = await _mediator.Send(new GetUserInfoQuery());
+            return Ok(currentUser);
         }
 
         [HttpGet]
@@ -33,8 +41,5 @@ namespace RoleplayingSchemaBackend.Controllers
 
             return Ok(result);
         }
-
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateUserPassword([FromBody] )
     }
 }

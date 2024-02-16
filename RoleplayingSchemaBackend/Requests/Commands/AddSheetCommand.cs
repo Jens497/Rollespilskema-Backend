@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using Microsoft.AspNetCore.Mvc;
 using RoleplayingSchemaBackend.Data;
 using RoleplayingSchemaBackend.Handlers.Interface;
 using RoleplayingSchemaBackend.Middleware;
 
-namespace RoleplayingSchemaBackend.Commands
+namespace RoleplayingSchemaBackend.Requests.Commands
 {
     [Authorized(Roles = "Admin")]
-    public record AddUserCommand(UserDTO User) : ICommand<String>;
+    public record AddSheetCommand(AddSheetDTO sheetDto) : ICommand<string>;
 }

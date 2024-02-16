@@ -11,10 +11,15 @@ namespace RoleplayingSchemaBackend.Data
         {
 
         }
-        //public DbSet<Users> Users { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<Sheet> Sheets { get; set; }
+        public DbSet<Component> Components { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Component>().ToTable(nameof(Component));
+            builder.Entity<Template>().ToTable(nameof(Template));
+            builder.Entity<Sheet>().ToTable(nameof(Sheet));
             this.SeedRoles(builder);
         }
 

@@ -20,12 +20,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(mdt => mdt.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 //This should be changed to Scoped life time rather than singleton WHEN the database will be connected
 
-//Are each of these even needed since swaggers can do this?
-//builder.Services.AddScoped<GetUsersQuery>();
-//builder.Services.AddScoped<GetUsersHandler>();
-//builder.Services.AddScoped<AddUserCommand>();
-//builder.Services.AddScoped<AddUserHandler>();
-
 //Database
 builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
     opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -35,12 +29,7 @@ builder.Services.AddDbContext<RoleplayingDbContext>(opts =>
                 maxRetryCount: 10,
                 maxRetryDelay: TimeSpan.FromSeconds(5),
                 errorNumbersToAdd: null);
-        }));/*, builder =>
-    {
-        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-    }));*/
-
-//opts.UseSqlServer(builder.Configuration.GetConnectionString("RPDBConnection")));
+        }));
 
 //Validator
 builder.Services.AddHttpContextAccessor();
@@ -49,17 +38,6 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(Authorization
 builder.Services.AddTransient<MiddlewareExcepitonHandler>();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddFluentValidationAutoValidation();//.AddFluentValidationClientsideAdapters();
-
-//Identity
-//builder.Services.AddIdentityCore<Users>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<RoleplayingDbContext>();
-
-/*builder.Services.AddAuthentication(o =>
-{
-    o.DefaultScheme = IdentityConstants.ApplicationScheme;
-    o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-})
-.AddIdentityCookies(o => { });*/
 
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
     {
@@ -78,28 +56,8 @@ builder.Services.ConfigureApplicationCookie(opts =>
 {
     opts.Cookie.HttpOnly = true;
     //This should be something like 60, but is set to one for testing purposes.
-    opts.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    opts.ExpireTimeSpan = TimeSpan.FromMinutes(120);
 });
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//})
-//           .AddCookie(config =>
-//           {
-//               config.Cookie.Name = "login";
-//               config.LoginPath = "/Account/Login";
-//               config.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-//           }
-//);
-//Authentication
-/*builder.Services.AddAuthentication(opts =>
-{
-    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-});*/
 
 var app = builder.Build();
 
@@ -108,6 +66,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseMiddleware<MiddlewareExcepitonHandler>();

@@ -44,5 +44,19 @@ namespace RoleplayingSchemaBackend.Controllers
             var res = await _mediator.Send(new UpdateTemplateCommand(template));
             return Ok(res);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteTemplate([FromQuery]string templateId)
+        {
+            var res = await _mediator.Send(new DeleteTemplateCommand(templateId));
+            return Ok(res);
+        }
+
+        [HttpDelete("{templateId}/{componentId}")]
+        public async Task<ActionResult> DeleteTemplateComponent([FromRoute]string templateId, [FromRoute]string componentId)
+        {
+            var res = await _mediator.Send(new DeleteTemplateComponentCommand(templateId, componentId));
+            return Ok(res);
+        }
     }
 }

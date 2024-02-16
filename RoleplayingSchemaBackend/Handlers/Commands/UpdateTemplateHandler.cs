@@ -7,7 +7,7 @@ using RoleplayingSchemaBackend.Exceptions;
 
 namespace RoleplayingSchemaBackend.Handlers.Commands
 {
-    public class UpdateTemplateHandler : ICommandHandler<UpdateTemplateCommand, string>
+    public class UpdateTemplateHandler : ICommandHandler<UpdateTemplateCommand, int>
     {
         private readonly RoleplayingDbContext _context;
 
@@ -16,7 +16,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
             _context = context;
         }
 
-        public async Task<string> Handle(UpdateTemplateCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdateTemplateCommand request, CancellationToken cancellationToken)
         {
             /*
                 1. Fetch the template
@@ -41,8 +41,7 @@ namespace RoleplayingSchemaBackend.Handlers.Commands
                 await _context.SaveChangesAsync();
 
                 _context.Templates.Add(request.template);
-                var res = await _context.SaveChangesAsync();
-                return res.ToString();
+                return await _context.SaveChangesAsync();
             }
 
             throw new Exception("The template looked for was not found");

@@ -8,6 +8,10 @@ using RoleplayingSchemaBackend.Middleware;
 using RoleplayingSchemaBackend.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Configuration.AddJsonFile("appsettings.local.json", true);
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
+builder.Configuration.AddJsonFile("appsettings.json", false, true);
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
 
 // Add services to the container.
 
@@ -78,6 +82,7 @@ app.UseRouting();
 app.UseCors(builder =>
 {
     var corsSettings = app.Configuration.GetSection("Cors").Get<CorsSettings>();
+    Console.WriteLine(corsSettings.AllowedOrigins.FirstOrDefault());
 
     builder.WithOrigins(corsSettings.AllowedOrigins);
     builder.AllowAnyHeader();
